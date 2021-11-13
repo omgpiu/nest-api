@@ -10,7 +10,7 @@ import { TypegooseModule } from "nestjs-typegoose";
 import { getMongoConfig } from "./configs/mongo.config";
 
 @Module({
-  imports: [TopPageModule, AuthModule, ProductModule, ReviewModule, ConfigModule.forRoot(), TypegooseModule.forRootAsync({
+  imports: [TopPageModule, AuthModule, ProductModule, ReviewModule, ConfigModule.forRoot({ isGlobal: true }), TypegooseModule.forRootAsync({
     imports: [ConfigModule],
     inject: [ConfigService],
     useFactory: getMongoConfig
