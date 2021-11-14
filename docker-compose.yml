@@ -1,4 +1,3 @@
-version: '4.1.1'
 services:
   mongo:
     image: mongo:4.4.4
@@ -11,3 +10,4 @@ services:
       - 27017:27017
     volumes:
       - ./mongo-data-4.4:/data/db
+
