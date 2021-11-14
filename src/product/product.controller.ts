@@ -38,8 +38,7 @@ export class ProductController {
   @Get(":id")
   async get(@Param("id",IdValidationPipe) id: string): Promise<ProductModel> {
     const product = await this.productService.findById(id);
-    console.log(product);
-    if (!product) throw new NotFoundException(PRODUCT_NOT_FOUND);
+       if (!product) throw new NotFoundException(PRODUCT_NOT_FOUND);
     return product;
   }
 

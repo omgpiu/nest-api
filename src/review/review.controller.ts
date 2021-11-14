@@ -23,7 +23,7 @@ export class ReviewController {
   constructor(private readonly reviewService: ReviewService) {
   }
 
-
+  @UseGuards(JwtGuard)
   @UsePipes(new ValidationPipe())
   @Post("create")
   async create(@Body() dto: CreateReviewDto) {
@@ -38,7 +38,7 @@ export class ReviewController {
     if (!deletedDoc) throw  new HttpException(REVIEW_NOT_FOUND, HttpStatus.NOT_FOUND);
   }
 
-
+  @UseGuards(JwtGuard)
   @Get("byProduct/:productId")
   async getByProduct(@Param("productId",IdValidationPipe) productId: string, @UserEmailDecorator() email: string) {
     //userEmailDecorator забирает email  с запроса
