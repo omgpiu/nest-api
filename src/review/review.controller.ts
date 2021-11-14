@@ -16,6 +16,7 @@ import { ReviewService } from "./review.service";
 import { REVIEW_NOT_FOUND } from "./constants";
 import { JwtGuard } from "../auth/guard/jwt.guard";
 import { UserEmailDecorator } from "../decorators/user.email.decorator";
+import { IdValidationPipe } from "../pipes/id.validation.pipe";
 
 @Controller("review")
 export class ReviewController {
@@ -32,14 +33,14 @@ export class ReviewController {
 
   @UseGuards(JwtGuard)
   @Delete(":id")
-  async delete(@Param("id") id: string) {
+  async delete(@Param("id",IdValidationPipe) id: string) {
     const deletedDoc = await this.reviewService.delete(id);
     if (!deletedDoc) throw  new HttpException(REVIEW_NOT_FOUND, HttpStatus.NOT_FOUND);
   }
 
 
   @Get("byProduct/:productId")
-  async getByProduct(@Param("productId") productId: string, @UserEmailDecorator() email: string) {
+  async getByProduct(@Param("productId",IdValidationPipe) productId: string, @UserEmailDecorator() email: string) {
     //userEmailDecorator забирает email  с запроса
     return this.reviewService.findByProductId(productId);
 

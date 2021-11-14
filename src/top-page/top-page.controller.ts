@@ -2,26 +2,27 @@ import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post } from "@ne
 import { FindTopPageDto } from "./dto/find-top-page.dto";
 
 import { TopPageModel } from "./top-page.model";
+import { IdValidationPipe } from "../pipes/id.validation.pipe";
 
-@Controller('top-page')
+@Controller("top-page")
 export class TopPageController {
-  @Post('create')
-  async create(@Body() dto: Omit<TopPageModel, '_id'>) {
+  @Post("create")
+  async create(@Body() dto: Omit<TopPageModel, "_id">) {
 
   }
 
-  @Get(':id')
-  async get(@Param('id') id: string) {
+  @Get(":id")
+  async get(@Param("id", IdValidationPipe) id: string) {
 
   }
 
-  @Delete(':id')
-  async delete(@Param('id') id: string) {
+  @Delete(":id")
+  async delete(@Param("id", IdValidationPipe) id: string) {
 
   }
 
-  @Patch(':id')
-  async patch(@Param('id') id: string, @Body() dto: TopPageModel) {
+  @Patch(":id")
+  async patch(@Param("id", IdValidationPipe) id: string, @Body() dto: TopPageModel) {
 
   }
 

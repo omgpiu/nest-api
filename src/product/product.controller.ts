@@ -20,6 +20,7 @@ import { CreateProductDto } from "./dto/create-product.dto";
 import { ProductService } from "./product.service";
 import { PRODUCT_NOT_FOUND } from "./constants";
 import { JwtGuard } from "../auth/guard/jwt.guard";
+import { IdValidationPipe } from "../pipes/id.validation.pipe";
 
 @Controller("product")
 export class ProductController {
@@ -35,22 +36,23 @@ export class ProductController {
 
   @UseGuards(JwtGuard)
   @Get(":id")
-  async get(@Param("id") id: string): Promise<ProductModel> {
+  async get(@Param("id",IdValidationPipe) id: string): Promise<ProductModel> {
     const product = await this.productService.findById(id);
+    console.log(product);
     if (!product) throw new NotFoundException(PRODUCT_NOT_FOUND);
     return product;
   }
 
   @UseGuards(JwtGuard)
   @Delete(":id")
-  async delete(@Param("id") id: string) {
+  async delete(@Param("id",IdValidationPipe) id: string) {
     const deletedProd = await this.productService.deleteById(id);
     if (!deletedProd) throw  new HttpException(PRODUCT_NOT_FOUND, HttpStatus.NOT_FOUND);
   }
 
   @UseGuards(JwtGuard)
   @Patch(":id")
-  async patch(@Param("id") id: string, @Body() dto: ProductModel) {
+  async patch(@Param("id",IdValidationPipe) id: string, @Body() dto: ProductModel) {
     const updatedPro = await this.productService.updateById(id, dto);
     if (!updatedPro) throw  new HttpException(PRODUCT_NOT_FOUND, HttpStatus.NOT_FOUND);
     return updatedPro;
