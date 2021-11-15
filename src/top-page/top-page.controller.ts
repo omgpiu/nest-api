@@ -69,7 +69,6 @@ export class TopPageController {
   }
 
   @UseGuards(JwtGuard)
-  @UsePipes(new ValidationPipe())
   @Post("find")
   async find(@Body() dto: FindTopPageDto) {
     return await this.topPageService.findByCategory(dto.firstCategory);
