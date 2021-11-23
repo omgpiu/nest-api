@@ -4,11 +4,12 @@ import { path } from "app-root-path";
 import { FileElementResponce } from "./dto/file-element.responce";
 import { ensureDir, writeFile } from "fs-extra";
 import * as sharp from "sharp";
+import { MFile } from "./mfile.class";
 
 @Injectable()
 export class FilesService {
 
-  async saveFiles(files: Express.Multer.File[]): Promise<FileElementResponce[]> {
+  async saveFiles(files:MFile[]): Promise<FileElementResponce[]> {
     const dateFolder = format(new Date(), "yyyy-MM-dd");
     const uploadFolder = `${path}/uploads/${dateFolder}`;
     await ensureDir(uploadFolder);
