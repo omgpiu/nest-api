@@ -8,15 +8,22 @@ import { ReviewModule } from "./review/review.module";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { TypegooseModule } from "nestjs-typegoose";
 import { getMongoConfig } from "./configs/mongo.config";
-import { FilesModule } from './files/files.module';
-import { SitemapModule } from './sitemap/sitemap.module';
+import { FilesModule } from "./files/files.module";
+import { SitemapModule } from "./sitemap/sitemap.module";
+import { TelegramModule } from "./telegram/telegram.module";
+import { getTelegramConfig } from "./configs/telegram.config";
 
 @Module({
   imports: [TopPageModule, AuthModule, ProductModule, ReviewModule, ConfigModule.forRoot({ isGlobal: true }), TypegooseModule.forRootAsync({
     imports: [ConfigModule],
     inject: [ConfigService],
     useFactory: getMongoConfig
-  }), FilesModule, SitemapModule],
+  }), FilesModule, SitemapModule,
+    TelegramModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: getTelegramConfig
+    })],
   controllers: [AppController],
   providers: [AppService]
 })
